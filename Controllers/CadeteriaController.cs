@@ -8,14 +8,17 @@ public class CadeteriaController : ControllerBase{
     private readonly ILogger<CadeteriaController > _logger;
     Cadeteria cadeteria;
     public CadeteriaController(ILogger<CadeteriaController > logger){
-        int opcion = 0;
+        /*int opcion = 0;
         Console.WriteLine("Cargar Datos");
         Console.WriteLine("1-CSV");
         Console.WriteLine("2-JSON");
-        bool successfullyParsed = int.TryParse(Console.ReadLine(), out opcion);
+        bool successfullyParsed = int.TryParse(Console.ReadLine(), out opcion); */
 
         cadeteria = new Cadeteria("Nombre de la Cadeteria", 3876642382);
-        cadeteria.cargarCadetes(opcion);
+        cadeteria.cargarCadetes(1);
+
+        cadeteria.AgregarPedido(0, "Observacion", "Tadeo", "Direccion", 3876642382, "Referencia");
+        cadeteria.AgregarPedido(1, "Observacion2", "Alonso", "Direccion2", 3876642382, "Referencia2");
 
         _logger = logger;
 
@@ -23,6 +26,55 @@ public class CadeteriaController : ControllerBase{
 
     [HttpGet(Name = "CadeteriaController")] //El primer metodo toma el nombre de la clase aunque no se ponga el nombre
     public ActionResult<string> GetNombreCadeteria(){
-        return cadeteria.Nombre;
+        return Ok(cadeteria.Nombre);
+    }
+
+    [HttpGet]
+    [Route("Pedidos")]
+    public ActionResult<string> GetPedidos(){
+        return Ok(cadeteria.getPedidos());
+    }
+    
+    [HttpGet]
+    [Route("Cadetes")]
+    public ActionResult<string> GetCadetes(){
+        return Ok(cadeteria.getCadetes());
+    }
+
+    [HttpPost]
+    [Route("AddPedido")]
+    public ActionResult<Pedido> agregarPedido(Pedido pedido){
+        var nuevoPedido = cadeteria.AddPedido(pedido);
+        return Ok(nuevoPedido);
+    }
+
+    [HttpGet]
+    [Route("Informe")]
+    public ActionResult<string> GetInforme(){
+        Informe nuevoInforme;
+        nuevoInforme = new Informe();
+        string informeJSON = nuevoInforme.GenerarInformeJson(cadeteria);
+        return Ok(informeJSON);
+    }
+
+    [HttpPut]
+    [Route("AsignarPedido")]
+    public ActionResult<Pedido> asignarPedido(int idPedido, int idCadete){
+        Pedido nuevoPedido = cadeteria.asignarCadeteAPedido(idCadete, idPedido);
+        return nuevoPedido;
+    }
+
+    [HttpPut]
+    [Route("CambiarCadete")]
+    public ActionResult<Pedido> cambiarCadetePedido(int idPedido, int idCadete){
+        Pedido pedido = cadeteria.reasignarCadete(idCadete, idPedido);
+        return pedido;
+    }
+
+    [HttpPut]
+    [Route("ActualizarEstadoPedido")]
+    public ActionResult<Pedido> actualizarEstadoPedido(int idPedido, int nuevoEstado){
+        Pedido pedido = cadeteria.cambiarEstadoPedido(idPedido);
+        return pedido;
     }
 }

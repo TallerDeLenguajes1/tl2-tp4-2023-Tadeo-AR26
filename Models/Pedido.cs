@@ -14,6 +14,7 @@ namespace EspacioCadeteria{
         public string? Estado { get => estado; set => estado = value; }
         public Cadete? Cadete { get => cadete; set => cadete = value; }
 
+        public Pedido(){} //Si le saco este constructor, los metodos para agregar cadetes mueren
         public Pedido(int numero, string observacion, string nombreCliente, string direccion, long telefono, string referencia_direccion)
         {
             cliente = new Cliente( nombreCliente,  direccion,  telefono,  referencia_direccion);
@@ -31,6 +32,17 @@ namespace EspacioCadeteria{
             infoCliente += $"Teléfono: {cliente.Telefono}\n";
             infoCliente += $"Dirección: {cliente.Direccion}\n";
             return infoCliente;
+        }
+
+        public string? GetDatosPedido(){
+            string? ped = $"Numero: {numero}\n";
+            ped += $"Observacion: {observacion}\n";
+            ped += $"Cliente: {cliente.Nombre}\n";
+            ped += $"Direccion: {cliente.Direccion}\n";
+            ped += $"Teléfono: {cliente.Telefono}\n";
+            ped += $"Referencia: {cliente.Referencia_direccion}\n";
+            ped += $"Estado: {estado}\n";
+            return ped;
         }
     }
 }
