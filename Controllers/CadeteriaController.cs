@@ -6,16 +6,10 @@ using UtilityLibraries;
 [Route("[controller]")]
 public class CadeteriaController : ControllerBase{
     private readonly ILogger<CadeteriaController > _logger;
-    Cadeteria cadeteria;
+    private Cadeteria cadeteria;
     public CadeteriaController(ILogger<CadeteriaController > logger){
-        /*int opcion = 0;
-        Console.WriteLine("Cargar Datos");
-        Console.WriteLine("1-CSV");
-        Console.WriteLine("2-JSON");
-        bool successfullyParsed = int.TryParse(Console.ReadLine(), out opcion); */
 
-        cadeteria = new Cadeteria("Nombre de la Cadeteria", 3876642382);
-        cadeteria.cargarCadetes(1);
+        cadeteria = Cadeteria.GetInstance();
 
         cadeteria.AgregarPedido(0, "Observacion", "Tadeo", "Direccion", 3876642382, "Referencia");
         cadeteria.AgregarPedido(1, "Observacion2", "Alonso", "Direccion2", 3876642382, "Referencia2");
@@ -31,13 +25,13 @@ public class CadeteriaController : ControllerBase{
 
     [HttpGet]
     [Route("Pedidos")]
-    public ActionResult<string> GetPedidos(){
+    public ActionResult<List<Pedido>> GetPedidos(){
         return Ok(cadeteria.getPedidos());
     }
     
     [HttpGet]
     [Route("Cadetes")]
-    public ActionResult<string> GetCadetes(){
+    public ActionResult<List<Cadete>> GetCadetes(){
         return Ok(cadeteria.getCadetes());
     }
 

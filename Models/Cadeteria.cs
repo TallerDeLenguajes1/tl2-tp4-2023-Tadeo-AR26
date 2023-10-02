@@ -9,17 +9,19 @@ using EspacioCadeteria;
 
 public class Cadeteria
 {
+
+    private static Cadeteria instance;
     private string? nombre;
-        private long telefono;
-        private List<Cadete> listaCadetes;
-        private List<Pedido> listaPedidos = new List<Pedido>();
+    private long telefono;
+    private List<Cadete> listaCadetes;
+    private List<Pedido> listaPedidos = new List<Pedido>();
 
-        public string? Nombre { get => nombre; set => nombre = value; }
-        public long Telefono { get => telefono; set => telefono = value; }
-        public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
-        public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
+    public string? Nombre { get => nombre; set => nombre = value; }
+    public long Telefono { get => telefono; set => telefono = value; }
+    public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
+    public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
-        public Cadeteria(string nombre, long telefono){
+    public Cadeteria(string nombre, long telefono){
             this.nombre = nombre;
             this.telefono = telefono;
         }
@@ -27,6 +29,14 @@ public class Cadeteria
             Cadete NuevoCadete;
             NuevoCadete = new Cadete(id, nombre, direccion, telefono);
             listaCadetes.Add(NuevoCadete);
+        }
+
+        public static Cadeteria GetInstance(){
+            if(instance == null){
+                instance = new Cadeteria("Nombre de la Cadeteria", 3876642382);
+                instance.cargarCadetes(1);
+            }
+            return instance;
         }
         
         public void AgregarPedido(int numero, string observacion, string nombreCliente, string direccion, long telefono, string referencia_direccion){
@@ -97,20 +107,12 @@ public class Cadeteria
             return pedidoEncontrado;
         }
 
-        public string getPedidos(){
-            string ped = "";
-            foreach (Pedido pedido in listaPedidos){
-                ped += pedido.GetDatosPedido();
-            }
-            return ped;
+        public List<Pedido> getPedidos(){
+            return listaPedidos;
         }
 
-        public string getCadetes(){
-            string cad = "";
-            foreach(Cadete cadete in listaCadetes){
-                cad += cadete.mostrarDatosCadete();
-            }
-            return cad;
+        public List<Cadete> getCadetes(){
+            return listaCadetes;
         }
 
         public List<Cadete> getListaDeCadetes(){

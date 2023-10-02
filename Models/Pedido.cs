@@ -33,16 +33,5 @@ namespace EspacioCadeteria{
             infoCliente += $"Dirección: {cliente.Direccion}\n";
             return infoCliente;
         }
-
-        public string? GetDatosPedido(){
-            string? ped = $"Numero: {numero}\n";
-            ped += $"Observacion: {observacion}\n";
-            ped += $"Cliente: {cliente.Nombre}\n";
-            ped += $"Direccion: {cliente.Direccion}\n";
-            ped += $"Teléfono: {cliente.Telefono}\n";
-            ped += $"Referencia: {cliente.Referencia_direccion}\n";
-            ped += $"Estado: {estado}\n";
-            return ped;
-        }
     }
 }
