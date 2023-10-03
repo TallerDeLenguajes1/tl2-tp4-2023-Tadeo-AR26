@@ -39,6 +39,7 @@ public class CadeteriaController : ControllerBase{
     [Route("AddPedido")]
     public ActionResult<Pedido> agregarPedido(Pedido pedido){
         var nuevoPedido = cadeteria.AddPedido(pedido);
+        cadeteria.GuardarPedidos();
         return Ok(nuevoPedido);
     }
 
@@ -55,6 +56,7 @@ public class CadeteriaController : ControllerBase{
     [Route("AsignarPedido")]
     public ActionResult<Pedido> asignarPedido(int idPedido, int idCadete){
         Pedido nuevoPedido = cadeteria.asignarCadeteAPedido(idCadete, idPedido);
+        cadeteria.GuardarPedidos();
         return nuevoPedido;
     }
 
@@ -62,6 +64,7 @@ public class CadeteriaController : ControllerBase{
     [Route("CambiarCadete")]
     public ActionResult<Pedido> cambiarCadetePedido(int idPedido, int idCadete){
         Pedido pedido = cadeteria.reasignarCadete(idCadete, idPedido);
+        cadeteria.GuardarPedidos();
         return pedido;
     }
 
@@ -69,6 +72,7 @@ public class CadeteriaController : ControllerBase{
     [Route("ActualizarEstadoPedido")]
     public ActionResult<Pedido> actualizarEstadoPedido(int idPedido, int nuevoEstado){
         Pedido pedido = cadeteria.cambiarEstadoPedido(idPedido);
+        cadeteria.GuardarPedidos();
         return pedido;
     }
 }

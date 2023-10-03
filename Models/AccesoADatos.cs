@@ -1,45 +1,70 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
 using System.Text.Json;
-using EspacioCadeteria;
+using UtilityLibraries;
 
 namespace EspacioCadeteria{
-    public class AccesoADatos{
-        private List<Cadete>? listaCadetes;
-        public List<Cadete>? ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
-
-        public virtual List<Cadete> cargarCadetes(string archivo){
-            return ListaCadetes;
-        }
-    }
-
-    public class AccesoCSV : AccesoADatos{
-        public override List<Cadete> cargarCadetes(string archivo){
-            List<Cadete> cadetes  = new List<Cadete>();
-            var cadetesCargados = File.ReadAllLines(archivo + ".csv")
-            .Skip(1).                           //Saltea el encabezado
-            Select(line => line.Split(',')).
-            Select(parts => new Cadete(int.Parse(parts[0]), parts[1], parts[2], long.Parse(parts[3])));
-            cadetes.AddRange(cadetesCargados);
-            ListaCadetes = cadetes;
-            return ListaCadetes;
-        }
-    }
-
-    public class AccesoJSON: AccesoADatos{
-        public override List<Cadete> cargarCadetes(string archivo){
-            List<Cadete>? cadetes = new List<Cadete>();
+    public class AccesoADatosCadeteria{
+        public AccesoADatosCadeteria(){}
+        public Cadeteria obtenerCadeteria(){
             try{
-                string jsonText = File.ReadAllText(archivo + ".json");
+                string archivo = "Cadeteria.json";
+                string jsonText = File.ReadAllText(archivo);
+                Cadeteria cadeteria = JsonSerializer.Deserialize<Cadeteria>(jsonText);
+                Console.WriteLine("ASD");
+                return cadeteria;
+            }
+            catch(Exception ex){
+
+            }
+            return null;
+        }
+    }
+
+    public class AccesoADatosCadetes{
+        public AccesoADatosCadetes(){}
+        public List<Cadete> ObtenerCadetes(){
+            List<Cadete> cadetes;
+            string archivo = "Cadetes.json";
+            try{
+                string jsonText = File.ReadAllText(archivo);
                 cadetes = JsonSerializer.Deserialize<List<Cadete>>(jsonText);
-                ListaCadetes = cadetes;
+                foreach(Cadete cad in cadetes){
+                    Console.WriteLine(cad.Nombre);
+                }
+                return cadetes;
             }
-            catch (Exception ex){
+            catch(Exception ex){
+
             }
-            return ListaCadetes;
+            return null;
+        }
+    }
+
+    public class AccesoADatosPedidos{
+        public AccesoADatosPedidos(){}
+        public List<Pedido> ObtenerPedidos(){
+            List<Pedido> pedidos = new List<Pedido>();
+            string archivo = "Pedidos.json";
+            try{
+                string jsonText = File.ReadAllText(archivo);
+                pedidos = JsonSerializer.Deserialize<List<Pedido>>(jsonText);
+            }
+            catch(Exception ex){
+
+            }
+            return pedidos;
+        }
+
+        public void GuardarPedidos(List<Pedido> Pedidos){
+            string DataPath = "Pedidos.json";
+            string jsonText = JsonSerializer.Serialize(Pedidos);
+            using (var nuevoarchivo = new FileStream(DataPath, FileMode.OpenOrCreate)){
+                using(var strWriter = new StreamWriter(nuevoarchivo)){
+                    strWriter.WriteLine("{0}", jsonText);
+                    strWriter.Close();
+                }
+            }
         }
     }
 }
