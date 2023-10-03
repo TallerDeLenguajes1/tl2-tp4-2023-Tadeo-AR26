@@ -15,15 +15,33 @@ public class Cadeteria
     private long telefono;
     private List<Cadete> listaCadetes;
     private List<Pedido> listaPedidos = new List<Pedido>();
+    private AccesoADatosCadetes accesoADatosCadetes = new AccesoADatosCadetes();
+    private AccesoADatosPedidos accesoADatosPedidos = new AccesoADatosPedidos();
 
     public string? Nombre { get => nombre; set => nombre = value; }
     public long Telefono { get => telefono; set => telefono = value; }
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
     public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
-    public Cadeteria(string nombre, long telefono){
+        public Cadeteria(){}
+        public Cadeteria(string nombre, long telefono){
             this.nombre = nombre;
             this.telefono = telefono;
+        }
+
+
+        //Metodos para guardar y cargar los cadetes y pedidos
+
+        public void cargarCadetes(){
+            listaCadetes = accesoADatosCadetes.ObtenerCadetes();
+        }
+
+        public void cargarPedidos(){
+            listaPedidos = accesoADatosPedidos.ObtenerPedidos();
+        }
+
+        public void GuardarPedidos(){
+            accesoADatosPedidos.GuardarPedidos(ListaPedidos);
         }
         public void AgregarCadete(int id, string nombre, string direccion, long telefono){
             Cadete NuevoCadete;
@@ -33,8 +51,9 @@ public class Cadeteria
 
         public static Cadeteria GetInstance(){
             if(instance == null){
-                instance = new Cadeteria("Nombre de la Cadeteria", 3876642382);
-                instance.cargarCadetes(1);
+                AccesoADatosCadeteria accesoADatosCadeteria = new AccesoADatosCadeteria();
+                instance = accesoADatosCadeteria.obtenerCadeteria();
+                instance.cargarCadetes();
             }
             return instance;
         }
@@ -63,7 +82,7 @@ public class Cadeteria
             return pedidoEncontrado;
         }
 
-        public void cargarCadetes(int opcion){
+        /*public void cargarCadetes(int opcion){
             // 1 cargar desde CSV - 2 cargar desde JSON
             AccesoADatos acceso = new AccesoADatos();
             string archivo = "Cadetes";
@@ -76,7 +95,7 @@ public class Cadeteria
                     break;
             }
             listaCadetes = acceso.cargarCadetes(archivo);
-        }
+        }*/
 
         public void mostrarDatosCadete(){
             foreach(Cadete cadete in listaCadetes){

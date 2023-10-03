@@ -1,20 +1,44 @@
 [
-    {
-      "Id": 1,
-      "Nombre": "Juan Pérez",
-      "Direccion": "Calle 123, Ciudad",
-      "Telefono": "123456780"
-    },
-    {
-      "Id": 2,
-      "Nombre": "María Gómez",
-      "Direccion": "Avenida XYZ, Otra Ciudad",
-      "Telefono": "987654321"
-    },
-    {
-      "Id": 3,
-      "Nombre": "Carlos López",
-      "Direccion": "Calle ABC, Otra Ciudad",
-      "Telefono": "551234567"
-    }
-  ]
+  {
+      "id": 1,
+      "nombre": "Lionel Olivas Velásquez",
+      "direccion": "12135 Vistabella del Maestrazgo",
+      "telefono": 639101475
+  },
+  {
+      "id": 2,
+      "nombre": "Catrian Cintrón Escobedo",
+      "direccion": "41940 Tomares",
+      "telefono": 714243825
+  },
+  {
+      "id": 3,
+      "nombre": "Sereno Valle Salazar",
+      "direccion": "17486 Castelló d'Empúries",
+      "telefono": 796924427
+  },
+  {
+      "id": 4,
+      "nombre": "Marlon Guillén Carmona",
+      "direccion": "29451 Parauta",
+      "telefono": 797934635
+  },
+  {
+      "id": 5,
+      "nombre": "César Pelayo Valencia",
+      "direccion": "39685 Vega de Pas",
+      "telefono": 736579708
+  },
+  {
+      "id": 6,
+      "nombre": "Natalí Quiñones Hinojosa",
+      "direccion": "18700 Albuñol",
+      "telefono": 789336531
+  },
+  {
+      "id": 7,
+      "nombre": "Celest Zapata Prado",
+      "direccion": "31140 Artajona",
+      "telefono": 720019061
+  }
+]
