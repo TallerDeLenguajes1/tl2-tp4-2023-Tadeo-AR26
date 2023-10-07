@@ -29,15 +29,23 @@ namespace EspacioCadeteria{
             try{
                 string jsonText = File.ReadAllText(archivo);
                 cadetes = JsonSerializer.Deserialize<List<Cadete>>(jsonText);
-                foreach(Cadete cad in cadetes){
-                    Console.WriteLine(cad.Nombre);
-                }
                 return cadetes;
             }
             catch(Exception ex){
 
             }
             return null;
+        }
+
+        public void GuardarCadetes(List<Cadete> Cadetes){
+            string DataPath = "Cadetes.json";
+            string jsonText = JsonSerializer.Serialize(Cadetes);
+            using (var nuevoarchivo = new FileStream(DataPath, FileMode.OpenOrCreate)){
+                using(var strWriter = new StreamWriter(nuevoarchivo)){
+                    strWriter.WriteLine("{0}", jsonText);
+                    strWriter.Close();
+                }
+            }
         }
     }
 

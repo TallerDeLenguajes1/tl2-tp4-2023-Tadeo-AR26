@@ -43,6 +43,10 @@ public class Cadeteria
         public void GuardarPedidos(){
             accesoADatosPedidos.GuardarPedidos(ListaPedidos);
         }
+
+        public void GuardarCadetes(){
+            accesoADatosCadetes.GuardarCadetes(ListaCadetes);
+        }
         public void AgregarCadete(int id, string nombre, string direccion, long telefono){
             Cadete NuevoCadete;
             NuevoCadete = new Cadete(id, nombre, direccion, telefono);
@@ -146,15 +150,33 @@ public class Cadeteria
             }
         }
         return cantidadPedidosAsignados;
-    }        
+        }        
 
         public int CantidadPedidosEntregados(int idCadete){
         int cantPedidos = 0;
         foreach (var pedido in listaPedidos){
             if (pedido.Cadete != null && pedido.Cadete.Id == idCadete && pedido.Estado=="Entregado"){
-                cantPedidos++;
+                    cantPedidos++;
+                }
             }
-        }
         return cantPedidos;
-    }
+        }
+
+        public Pedido getPedidoID(int idPedido){
+            Pedido pedidoBuscado;
+            pedidoBuscado = ListaPedidos.FirstOrDefault(p => p.Numero == idPedido);
+            return pedidoBuscado;
+        }
+
+        public Cadete getCadeteID(int idCadete){
+            Cadete cadeteBuscado;
+            cadeteBuscado = ListaCadetes.FirstOrDefault(c => c.Id == idCadete);
+            return cadeteBuscado; 
+        }
+
+        public Cadete addCadete(Cadete nuevoCadete){
+            listaCadetes.Add(nuevoCadete);
+            return nuevoCadete;
+        }
+    
 }

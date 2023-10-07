@@ -75,4 +75,27 @@ public class CadeteriaController : ControllerBase{
         cadeteria.GuardarPedidos();
         return pedido;
     }
+
+    [HttpGet]
+    [Route("GetPedido")]
+
+    public ActionResult<Pedido> getPedido(int idPedido){
+        return Ok(cadeteria.getPedidoID(idPedido));
+    }
+
+    [HttpGet]
+    [Route("GetCadete")]
+    public ActionResult<Cadete> getCadete(int idCadete){
+        return Ok(cadeteria.getCadeteID(idCadete));
+    }
+
+    [HttpPost]
+    [Route("AddCadete")]
+
+    public ActionResult<Cadete> addCadete(Cadete nuevoCadete){
+        cadeteria.addCadete(nuevoCadete);
+        cadeteria.GuardarCadetes();
+        return Ok(nuevoCadete);
+    }
+
 }
